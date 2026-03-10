@@ -1,35 +1,127 @@
+import java.util.Scanner;
+
 /**
- * UseCase1HotelBookingApp
+ * UseCase2RoomInitialization
  *
- * This class represents the entry point of the Book My Stay
- * Hotel Booking Management System application.
- * It demonstrates how a Java program starts execution
- * and prints a welcome message to the console.
+ * Demonstrates initialization of different room types
+ * and allows the user to choose a room to view availability.
  *
  * @author Student
- * @version 1.0
+ * @version 2.1
  */
 
-public class BookMyStayApp{
+public class BookMyStayApp {
 
-    /**
-     * Main method - Entry point of the Java application.
-     * The JVM starts program execution from this method.
-     *
-     * @param args Command line arguments
-     */
     public static void main(String[] args) {
 
-        // Print welcome message
-        System.out.println("=================================");
-        System.out.println(" Welcome to Book My Stay App ");
-        System.out.println(" Hotel Booking System v1.0 ");
-        System.out.println("=================================");
+        Scanner scanner = new Scanner(System.in);
 
-        // Inform user application has started
-        System.out.println("Application started successfully!");
+        System.out.println("=====================================");
+        System.out.println("Book My Stay - Hotel Booking System");
+        System.out.println("Version 2.1");
+        System.out.println("=====================================");
 
-        // Inform user application is ending
-        System.out.println("Thank you for using Book My Stay.");
+        // Creating room objects (Polymorphism)
+        Room singleRoom = new SingleRoom();
+        Room doubleRoom = new DoubleRoom();
+        Room suiteRoom = new SuiteRoom();
+
+        // Static availability variables
+        int singleAvailability = 5;
+        int doubleAvailability = 3;
+        int suiteAvailability = 2;
+
+        System.out.println("\nSelect Room Type:");
+        System.out.println("1. Single Room");
+        System.out.println("2. Double Room");
+        System.out.println("3. Suite Room");
+        System.out.print("Enter your choice: ");
+
+        int choice = scanner.nextInt();
+
+        System.out.println("\n--- Room Details ---\n");
+
+        switch (choice) {
+
+            case 1:
+                singleRoom.displayRoomDetails();
+                System.out.println("Available Rooms: " + singleAvailability);
+                break;
+
+            case 2:
+                doubleRoom.displayRoomDetails();
+                System.out.println("Available Rooms: " + doubleAvailability);
+                break;
+
+            case 3:
+                suiteRoom.displayRoomDetails();
+                System.out.println("Available Rooms: " + suiteAvailability);
+                break;
+
+            default:
+                System.out.println("Invalid choice. Please restart the application.");
+        }
+
+        System.out.println("\nThank you for using Book My Stay.");
+        scanner.close();
+    }
+}
+
+/**
+ * Abstract Room class defining common properties.
+ * @version 2.0
+ */
+abstract class Room {
+
+    private String roomType;
+    private int beds;
+    private int size;
+    private double price;
+
+    public Room(String roomType, int beds, int size, double price) {
+        this.roomType = roomType;
+        this.beds = beds;
+        this.size = size;
+        this.price = price;
+    }
+
+    public void displayRoomDetails() {
+        System.out.println("Room Type : " + roomType);
+        System.out.println("Beds      : " + beds);
+        System.out.println("Size      : " + size + " sq ft");
+        System.out.println("Price     : $" + price);
+    }
+}
+
+/**
+ * Single Room implementation.
+ * @version 2.0
+ */
+class SingleRoom extends Room {
+
+    public SingleRoom() {
+        super("Single Room", 1, 200, 100.0);
+    }
+}
+
+/**
+ * Double Room implementation.
+ * @version 2.0
+ */
+class DoubleRoom extends Room {
+
+    public DoubleRoom() {
+        super("Double Room", 2, 350, 180.0);
+    }
+}
+
+/**
+ * Suite Room implementation.
+ * @version 2.0
+ */
+class SuiteRoom extends Room {
+
+    public SuiteRoom() {
+        super("Suite Room", 3, 600, 350.0);
     }
 }
